@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Saved Destinations — Explore India{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="eyebrow">YOUR PERSONAL COLLECTION</div><h1>Places to keep <em>close.</em></h1><p>Save the destinations that caught your eye. Your next trip might start right here.</p></section>
+<section class="section section-pad compact-top"><div class="results-bar"><p id="favoritesCount">Your saved destinations</p><a class="text-link" href="/destinations">Find more places ↗</a></div><div class="destination-grid" id="favoritesGrid"><div class="loading-card">Loading your saved places…</div></div><div id="emptyFavorites" class="empty-state" hidden><span>♡</span><h3>No saved places just yet.</h3><p>Explore destinations and tap the heart to build your personal collection.</p><a class="button button-dark" href="/destinations">Discover places ↗</a></div></section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/favorites.js') }}"></script>{% endblock %}

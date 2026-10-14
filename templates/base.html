@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Explore India{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/"><span class="brand-mark">✦</span><span>explore<span class="brand-accent">india</span><small>YOUR NEXT STORY STARTS HERE</small></span></a>
+    <button class="mobile-menu" id="mobileMenu" aria-label="Toggle menu">☰</button>
+    <nav id="mainNav">
+      <a href="/" data-nav="home">Home</a>
+      <a href="/destinations" data-nav="destinations">Destinations</a>
+      <a href="/planner" data-nav="planner">Trip planner</a>
+      <a href="/analytics" data-nav="analytics">Insights</a>
+      <a href="/quiz" data-nav="quiz">Travel quiz</a>
+      <a href="/favorites" data-nav="favorites">♡ Saved</a>
+    </nav>
+    <a href="/planner" class="nav-cta">Plan a trip <span>↗</span></a>
+  </header>
+  <main>{% block content %}{% endblock %}</main>
+  <footer class="footer">
+    <div><a class="brand footer-brand" href="/"><span class="brand-mark">✦</span><span>explore<span class="brand-accent">india</span><small>MADE FOR THE CURIOUS</small></span></a></div>
+    <p>Discover more. Travel thoughtfully. Make memories.</p>
+    <span>Academic DVP Mini Project · Tourism data analytics</span>
+  </footer>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

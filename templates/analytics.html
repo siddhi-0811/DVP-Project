@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Tourism Insights — Explore India{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="eyebrow">THE STORY BEHIND THE STOPS</div><h1>India, by the <em>numbers.</em></h1><p>Explore patterns in visitor ratings, attraction types, and entry fees across the dataset.</p></section>
+<section class="section section-pad compact-top">
+  <div class="insight-callout"><span class="insight-icon">✧</span><div><b>Look closer, travel smarter.</b><p>Use these insights to spot highly rated places, compare regions, and find destinations that fit your travel style.</p></div><a class="text-link" href="/destinations">Explore places ↗</a></div>
+  <div class="analytics-grid"><div class="chart-card chart-wide"><div class="chart-heading"><div><span class="mini-label">REGIONAL SNAPSHOT</span><h3>Attractions by state</h3></div><span class="chart-tag">Top regions</span></div><div id="stateChart" class="chart-area"></div></div>
+  <div class="chart-card"><div class="chart-heading"><div><span class="mini-label">WHAT'S OUT THERE?</span><h3>Attraction types</h3></div></div><div id="typeChart" class="chart-area"></div></div>
+  <div class="chart-card"><div class="chart-heading"><div><span class="mini-label">VALUE EXPLORER</span><h3>Rating vs. entry fee</h3></div></div><div id="scatterChart" class="chart-area"></div></div></div>
+  <div class="section-heading subheading"><div><div class="eyebrow">THE CROWD FAVOURITES</div><h2>Places people <em>talk about.</em></h2></div><a class="text-link" href="/destinations">Explore all ↗</a></div>
+  <div class="table-wrap"><table class="data-table"><thead><tr><th>Attraction</th><th>Location</th><th>Rating</th><th>Reviews (lakhs)</th><th>Entry fee</th></tr></thead><tbody id="topReviewedBody"><tr><td colspan="5">Loading insights…</td></tr></tbody></table></div>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/analytics.js') }}"></script>{% endblock %}

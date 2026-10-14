@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Smart Trip Planner — Explore India{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="eyebrow">YOUR TRIP, YOUR WAY</div><h1>Make room for <em>memories.</em></h1><p>A thoughtful trip plan, built around your budget, your time, and what you love.</p></section>
+<section class="section section-pad compact-top planner-layout">
+  <form id="plannerForm" class="planner-form">
+    <div class="form-heading"><span class="step-badge">01</span><div><h2>Tell us your travel vibe</h2><p>We'll use your preferences to build a realistic shortlist.</p></div></div>
+    <label>Give your trip a name<input name="title" placeholder="e.g. A weekend of wonder"></label>
+    <label>Choose a state or region<select name="state" id="plannerState"><option value="">Surprise me — anywhere in India</option></select></label>
+    <label>What are you in the mood for?<select name="type" id="plannerType"><option value="">A little bit of everything</option></select></label>
+    <div class="form-two">
+      <label>Entrance fee budget <span class="field-value" id="budgetValue">₹1,000</span><input type="range" name="budget" id="budgetRange" min="0" max="5000" step="100" value="1000"></label>
+      <label>Available visit time <span class="field-value" id="hoursValue">6 hours</span><input type="range" name="hours" id="hoursRange" min="1" max="16" step="0.5" value="6"></label>
+    </div>
+    <label>Minimum visitor rating<select name="rating"><option value="3.5">3.5 stars and above</option><option value="4" selected>4.0 stars and above</option><option value="4.5">4.5 stars and above</option></select></label>
+    <label>How many places would you like?<select name="count"><option value="3">A relaxed 3-place trip</option><option value="4">4 places</option><option value="6" selected>Up to 6 places</option><option value="10">I'm ready to explore — up to 10</option></select></label>
+    <button class="button button-dark button-wide" type="submit">Build my itinerary <span>↗</span></button>
+    <p class="form-footnote">Estimates use entrance fees and visit durations in the dataset. Travel, food and accommodation are not included.</p>
+  </form>
+  <div class="planner-side">
+    <div class="planner-side-top"><span class="mini-label">THE ART OF GETTING LOST</span><div class="planner-illustration"><div class="sun"></div><div class="mountain mountain-back"></div><div class="mountain mountain-front"></div><div class="illustration-path"></div><span class="illustration-pin">⌖</span></div><h3>Good trips don't have to be complicated.</h3><p>Set your limits. We'll find the possibilities.</p></div>
+    <div class="planner-tip"><span>✧</span><div><b>Travel tip</b><p>Mix one popular landmark with a few lesser-known spots to make a day feel more personal.</p></div></div>
+  </div>
+</section>
+<section class="section section-pad plan-results-section" id="planResultsSection" hidden>
+  <div class="section-heading"><div><div class="eyebrow">YOUR ITINERARY</div><h2>A little plan, a lot of <em>possibility.</em></h2><p id="planMessage"></p></div><button id="downloadPlan" class="button button-outline" disabled>Download PDF ↓</button></div>
+  <div class="plan-metrics" id="planMetrics"></div>
+  <div id="planItems" class="plan-list"></div>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/planner.js') }}"></script>{% endblock %}

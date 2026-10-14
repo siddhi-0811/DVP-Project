@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Explore Destinations — Explore India{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="eyebrow">THE WORLD IS A BOOK</div><h1>Find your <em>somewhere.</em></h1><p>Browse 325+ Indian attractions and find the one that feels like you.</p></section>
+<section class="section section-pad compact-top">
+  <div class="filter-panel">
+    <div class="filter-search"><span>⌕</span><input id="searchInput" placeholder="Search places, cities, states…" autocomplete="off"><kbd>↵</kbd></div>
+    <select id="stateFilter" aria-label="Filter by state"><option value="">All states</option></select>
+    <select id="typeFilter" aria-label="Filter by category"><option value="">All categories</option></select>
+    <select id="ratingFilter" aria-label="Minimum rating"><option value="">Any rating</option><option value="4.5">4.5+ stars</option><option value="4">4.0+ stars</option><option value="3.5">3.5+ stars</option></select>
+    <select id="feeFilter" aria-label="Maximum entrance fee"><option value="">Any entry fee</option><option value="0">Free entry</option><option value="100">Up to ₹100</option><option value="500">Up to ₹500</option><option value="1000">Up to ₹1,000</option></select>
+    <select id="sortFilter" aria-label="Sort destinations"><option value="rating">Top rated</option><option value="reviews">Most reviewed</option><option value="fee">Lowest fee</option><option value="duration">Shortest visit</option><option value="name">A–Z</option></select>
+    <button id="resetFilters" class="reset-button">Reset ↺</button>
+  </div>
+  <div class="results-bar"><p id="resultsCount">Loading destinations…</p><a class="text-link" id="exportCsv" href="/api/export/destinations.csv">Export CSV ↓</a></div>
+  <div class="destination-grid" id="destinationGrid"><div class="loading-card">Loading destinations…</div></div>
+  <div class="center-action"><button class="button button-outline" id="loadMore" hidden>Load more places ↓</button></div>
+</section>
+<div class="modal-backdrop" id="detailModal" hidden><div class="detail-modal"><button class="modal-close" id="closeModal" aria-label="Close">×</button><div id="detailContent"></div></div></div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/destinations.js') }}"></script>{% endblock %}

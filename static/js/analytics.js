@@ -1,0 +1,10 @@
+document.addEventListener("DOMContentLoaded",async()=>{
+ try{
+  const data=await api("/api/analytics");
+  const layout={margin:{l:35,r:12,t:8,b:65},paper_bgcolor:"rgba(0,0,0,0)",plot_bgcolor:"rgba(0,0,0,0)",font:{family:"DM Sans",size:10,color:"#6c7d86"},xaxis:{gridcolor:"#edf1ed",zerolinecolor:"#edf1ed"},yaxis:{gridcolor:"#edf1ed",zerolinecolor:"#edf1ed"},showlegend:false};
+  Plotly.newPlot("stateChart",[{type:"bar",x:data.by_state.map(x=>x.label),y:data.by_state.map(x=>x.count),marker:{color:"#5c9279"},hovertemplate:"%{x}<br>%{y} attractions<extra></extra>"}],{...layout,xaxis:{...layout.xaxis,tickangle:-35},yaxis:{...layout.yaxis,title:"Attractions"}},{responsive:true,displayModeBar:false});
+  Plotly.newPlot("typeChart",[{type:"pie",labels:data.by_type.map(x=>x.label),values:data.by_type.map(x=>x.count),hole:.56,marker:{colors:["#2d6b56","#d89b6a","#9db8a7","#e6c7a8","#789ca0","#c5d7cb"]},textinfo:"percent",hovertemplate:"%{label}: %{value}<extra></extra>"}],{...layout,margin:{l:10,r:10,t:10,b:10},showlegend:true,legend:{orientation:"h",y:-.12,font:{size:9}}},{responsive:true,displayModeBar:false});
+  Plotly.newPlot("scatterChart",[{type:"scatter",mode:"markers",x:data.fee_rating.map(x=>x.fee),y:data.fee_rating.map(x=>x.rating),text:data.fee_rating.map(x=>x.name),marker:{size:data.fee_rating.map(x=>Math.max(7,Math.min(24,7+x.reviews*2))),color:"#5c9279",opacity:.72},hovertemplate:"%{text}<br>Fee: ₹%{x}<br>Rating: %{y}<extra></extra>"}],{...layout,xaxis:{...layout.xaxis,title:"Entrance fee (₹)"},yaxis:{...layout.yaxis,title:"Google rating",range:[2.5,5]}},{responsive:true,displayModeBar:false});
+  $("#topReviewedBody").innerHTML=data.top_reviewed.map(x=>`<tr><td>${escapeHtml(x.name)}<small>${escapeHtml(x.type)}</small></td><td>${escapeHtml([x.city,x.state].filter(Boolean).join(", "))}</td><td>★ ${x.rating.toFixed(1)}</td><td>${x.review_lakhs.toFixed(2)}</td><td>${money(x.entrance_fee)}</td></tr>`).join("");
+ }catch(e){$(".analytics-grid").innerHTML=`<div class="loading-card">${escapeHtml(e.message)}</div>`}
+});

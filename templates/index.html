@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Explore India — Find your next story{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow"><span class="eyebrow-dot"></span> A LITTLE CURIOSITY GOES A LONG WAY</div>
+    <h1>India is calling.<br><em>Where will you go?</em></h1>
+    <p class="hero-text">Find extraordinary places, plan a trip that fits your budget, and discover the stories hiding in India's most loved attractions.</p>
+    <form class="hero-search" action="/destinations">
+      <span class="search-symbol">⌕</span>
+      <input name="q" placeholder="Try Taj Mahal, Jaipur, temples..." aria-label="Search destinations">
+      <button class="button button-dark">Explore <span>↗</span></button>
+    </form>
+    <div class="hero-social"><div class="avatar-stack"><span>✦</span><span>◉</span><span>⌁</span></div><span><b>325+ places</b> ready to be discovered</span></div>
+  </div>
+  <div class="hero-art">
+    <div class="hero-photo main-photo"><img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=1000&q=85" alt="Taj Mahal at sunrise"></div>
+    <div class="photo-label"><span class="label-pin">⌖</span><div><b>Taj Mahal</b><small>Agra, Uttar Pradesh</small></div><span class="rating-pill">★ 4.8</span></div>
+    <div class="floating-note note-top"><span class="note-icon">✧</span><span><b>Your kind of adventure</b><small>One click away</small></span></div>
+    <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
+    <div class="hero-spark">✳</div>
+  </div>
+  <div class="hero-bottom-note">01 / DISCOVER INDIA <span>SCROLL TO EXPLORE ↓</span></div>
+</section>
+<section class="stats-strip" id="dashboardStats">
+  <div class="stat-item"><span class="stat-icon">⌖</span><div><strong id="statPlaces">—</strong><span>Places to explore</span></div></div>
+  <div class="stat-item"><span class="stat-icon">✧</span><div><strong id="statStates">—</strong><span>States & regions</span></div></div>
+  <div class="stat-item"><span class="stat-icon">★</span><div><strong id="statRating">—</strong><span>Average visitor rating</span></div></div>
+  <div class="stat-item"><span class="stat-icon">₹</span><div><strong id="statFee">—</strong><span>Average entry fee</span></div></div>
+</section>
+<section class="section section-pad">
+  <div class="section-heading"><div><div class="eyebrow">YOUR NEXT CHAPTER</div><h2>Find your kind of <em>India.</em></h2><p>From ancient wonders to quiet escapes, your next favourite place is out there.</p></div><a class="text-link" href="/destinations">Explore all places <span>↗</span></a></div>
+  <div class="category-row">
+    <button class="category-chip active" data-type="">✦ All experiences</button>
+    <button class="category-chip" data-type="Historical">⌂ History & heritage</button>
+    <button class="category-chip" data-type="Religious">✧ Spiritual escapes</button>
+    <button class="category-chip" data-type="Nature">❋ Nature & outdoors</button>
+    <button class="category-chip" data-type="Beach">≈ Coastal days</button>
+  </div>
+  <div class="destination-grid" id="featuredGrid"><div class="loading-card">Finding your next adventure…</div></div>
+  <div class="center-action"><a href="/destinations" class="button button-outline">See all destinations <span>↗</span></a></div>
+</section>
+<section class="planner-banner">
+  <div class="banner-decoration">✳</div><div class="banner-copy"><div class="eyebrow eyebrow-light">LESS SCROLLING, MORE EXPLORING</div><h2>Your dream trip.<br><em>Your budget. Your rules.</em></h2><p>Tell us your budget, available time, and what you love. We'll help you build a trip that makes sense for you.</p><a class="button button-cream" href="/planner">Build my itinerary <span>↗</span></a></div>
+  <div class="banner-card"><span class="mini-label">YOUR TRIP AT A GLANCE</span><div class="trip-preview"><span class="trip-number">01</span><div><b>Pick your vibe</b><small>History, nature, culture…</small></div><span>✓</span></div><div class="trip-preview"><span class="trip-number">02</span><div><b>Set your limits</b><small>Budget and time, sorted</small></div><span>✓</span></div><div class="trip-preview"><span class="trip-number">03</span><div><b>Get out there</b><small>Your plan, ready to go</small></div><span class="trip-arrow">↗</span></div></div>
+</section>
+<section class="section section-pad quiz-promo"><div class="quiz-promo-icon">✦</div><div><div class="eyebrow">A QUICK LITTLE CHALLENGE</div><h2>How well do you know <em>India?</em></h2><p>Test your travel knowledge, collect points, and discover a place you might want to visit next.</p></div><a href="/quiz" class="button button-dark">Play the travel quiz <span>↗</span></a></section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/home.js') }}"></script>{% endblock %}

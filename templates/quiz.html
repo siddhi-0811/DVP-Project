@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Travel Quiz — Explore India{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="eyebrow">A LITTLE KNOWLEDGE, A LOT OF WANDERLUST</div><h1>Think you know <em>India?</em></h1><p>Take the challenge, collect points, and discover your next travel inspiration.</p></section>
+<section class="section section-pad compact-top quiz-layout">
+  <div class="quiz-main" id="quizMain"><div class="quiz-intro"><div class="quiz-big-icon">✳</div><span class="mini-label">THE EXPLORER CHALLENGE</span><h2>8 questions. Countless places.</h2><p>Answer questions based on the attraction dataset. Each correct answer earns 10 points. Ready to test your travel instincts?</p><button id="startQuiz" class="button button-dark">Let's play <span>↗</span></button></div></div>
+  <aside class="quiz-aside"><div class="quiz-aside-number">✦</div><h3>Every answer is a new place to discover.</h3><p>Even if you miss one, you'll leave with a new destination on your radar.</p><div class="quiz-rules"><div><span>01</span><b>Read the clue</b></div><div><span>02</span><b>Choose your answer</b></div><div><span>03</span><b>Collect your points</b></div></div></aside>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/quiz.js') }}"></script>{% endblock %}
