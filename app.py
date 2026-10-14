@@ -9,7 +9,8 @@ from database import init_db, get_db, DB_KIND
 from services import (
     get_destinations, get_destination, get_dashboard_stats, get_analytics,
     recommend_destinations, build_itinerary, save_trip, get_favorites,
-    toggle_favorite, save_quiz_result, get_trip_history
+    toggle_favorite, save_quiz_result, get_trip_history, get_saved_trip, 
+    update_trip, delete_trip
 )
 from exports import make_csv, make_pdf
 
@@ -46,6 +47,10 @@ def quiz_page():
 @app.route("/favorites")
 def favorites_page():
     return render_template("favorites.html")
+
+@app.route("/history")
+def history_page():
+    return render_template("history.html")
 
 @app.route("/api/health")
 def health():
@@ -118,6 +123,44 @@ def favorite_action(destination_id):
 @app.route("/api/trip-history")
 def trip_history():
     return jsonify(get_trip_history(visitor_id()))
+
+@app.route("/api/trip-history/<int:trip_id>")
+def saved_trip_details(trip_id):
+    trip = get_saved_trip(visitor_id(), trip_id)
+
+    if not trip:
+        return jsonify({"error": "Trip not found"}), 404
+
+    return jsonify(trip)
+
+
+@app.route("/api/trip-history/<int:trip_id>", methods=["PUT"])
+def update_saved_trip(trip_id):
+    data = request.get_json(silent=True) or {}
+
+    try:
+        updated = update_trip(visitor_id(), trip_id, data)
+    except ValueError as error:
+        return jsonify({"error": str(error)}), 400
+
+    if not updated:
+        return jsonify({"error": "Trip not found"}), 404
+
+    return jsonify({"success": True, "message": "Itinerary updated successfully"})
+
+
+@app.route("/api/trip-history/<int:trip_id>", methods=["DELETE"])
+def delete_saved_trip(trip_id):
+    deleted = delete_trip(visitor_id(), trip_id)
+
+    if not deleted:
+        return jsonify({"error": "Trip not found"}), 404
+
+    return jsonify({
+        "success": True,
+        "message": "Itinerary deleted successfully"
+    })
+
 
 @app.route("/api/quiz/questions")
 def quiz_questions():

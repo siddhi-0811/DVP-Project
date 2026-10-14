@@ -240,3 +240,139 @@ def save_quiz_result(visitor, score, total):
 def get_trip_history(visitor):
     ph = "%s" if DB_KIND == "mysql" else "?"
     return _all("SELECT id,title,budget,hours_available,total_fee,total_hours,created_at FROM trip_plans WHERE visitor_id=" + ph + " ORDER BY id DESC LIMIT 10", (visitor,))
+
+def get_saved_trip(visitor, trip_id):
+    trip = _one(
+        """SELECT id, title, budget, hours_available,
+                  total_fee, total_hours, items_json, created_at
+           FROM trip_plans
+           WHERE id = %s AND visitor_id = %s"""
+        if DB_KIND == "mysql"
+        else
+        """SELECT id, title, budget, hours_available,
+                  total_fee, total_hours, items_json, created_at
+           FROM trip_plans
+           WHERE id = ? AND visitor_id = ?""",
+        (trip_id, visitor)
+    )
+
+    if not trip:
+        return None
+
+    try:
+        trip["items"] = json.loads(trip.get("items_json") or "[]")
+    except (json.JSONDecodeError, TypeError):
+        trip["items"] = []
+
+    trip.pop("items_json", None)
+    return trip
+
+
+def update_trip(visitor, trip_id, data):
+    title = str(data.get("title", "")).strip()
+
+    if not title:
+        raise ValueError("Trip title cannot be empty.")
+
+    try:
+        budget = float(data.get("budget"))
+        hours_available = float(data.get("hours_available"))
+    except (TypeError, ValueError):
+        raise ValueError("Enter a valid budget and available hours.")
+
+    if budget < 0:
+        raise ValueError("Budget cannot be negative.")
+
+    if hours_available <= 0:
+        raise ValueError("Available hours must be greater than zero.")
+
+    connection = get_db()
+    cursor = connection.cursor()
+
+    try:
+        placeholder = "%s" if DB_KIND == "mysql" else "?"
+
+        cursor.execute(
+            f"""
+            SELECT total_fee, total_hours
+            FROM trip_plans
+            WHERE id = {placeholder}
+              AND visitor_id = {placeholder}
+            """,
+            (trip_id, visitor)
+        )
+
+        existing_trip = cursor.fetchone()
+
+        if not existing_trip:
+            return False
+
+        if isinstance(existing_trip, dict):
+            total_fee = float(existing_trip["total_fee"] or 0)
+            total_hours = float(existing_trip["total_hours"] or 0)
+        else:
+            total_fee = float(existing_trip[0] or 0)
+            total_hours = float(existing_trip[1] or 0)
+
+        if budget < total_fee:
+            raise ValueError(
+                f"Budget cannot be lower than the itinerary's "
+                f"entrance fees (₹{total_fee:.2f})."
+            )
+
+        if hours_available < total_hours:
+            raise ValueError(
+                f"Available hours cannot be lower than the itinerary's "
+                f"visit time ({total_hours} hours)."
+            )
+
+        cursor.execute(
+            f"""
+            UPDATE trip_plans
+            SET title = {placeholder},
+                budget = {placeholder},
+                hours_available = {placeholder}
+            WHERE id = {placeholder}
+              AND visitor_id = {placeholder}
+            """,
+            (title, budget, hours_available, trip_id, visitor)
+        )
+
+        connection.commit()
+        return True
+
+    except Exception:
+        connection.rollback()
+        raise
+
+    finally:
+        cursor.close()
+        connection.close()
+
+
+def delete_trip(visitor, trip_id):
+    connection = get_db()
+    cursor = connection.cursor()
+    placeholder = "%s" if DB_KIND == "mysql" else "?"
+
+    try:
+        cursor.execute(
+            f"""
+            DELETE FROM trip_plans
+            WHERE id = {placeholder}
+              AND visitor_id = {placeholder}
+            """,
+            (trip_id, visitor)
+        )
+
+        deleted = cursor.rowcount > 0
+        connection.commit()
+        return deleted
+
+    except Exception:
+        connection.rollback()
+        raise
+
+    finally:
+        cursor.close()
+        connection.close()

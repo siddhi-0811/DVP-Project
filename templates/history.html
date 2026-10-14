@@ -1,0 +1,37 @@
+
+{% extends "base.html" %}
+
+{% block title %}Trip History | Explore India{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <p class="eyebrow">YOUR TRAVEL JOURNAL</p>
+  <h1>Trips worth <em>remembering.</em></h1>
+  <p>Your saved itineraries, all in one place.</p>
+</section>
+
+<section class="section-wrap">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">YOUR COLLECTION</p>
+      <h2>Saved itineraries</h2>
+    </div>
+    <a href="/planner" class="button button-primary">
+      Build a new itinerary ↗
+    </a>
+  </div>
+
+  <p id="historyCount" class="muted">Loading your trips...</p>
+  <div id="historyGrid" class="destination-grid"></div>
+
+  <div id="historyEmpty" class="empty-state" hidden>
+    <h3>No saved itineraries yet</h3>
+    <p>Build an itinerary and it will appear here.</p>
+    <a href="/planner">Start planning ↗</a>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/history.js') }}"></script>
+{% endblock %}
